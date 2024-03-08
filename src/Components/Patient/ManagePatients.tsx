@@ -757,33 +757,16 @@ export const PatientManager = () => {
             </ButtonV2>
           </div>
           <div className="flex w-full flex-col items-center justify-end gap-2 lg:ml-3 lg:w-fit lg:flex-row lg:gap-3">
-            <SwitchTabs
-              tab1="Live"
-              tab2="Discharged"
-              onClickTab1={() => updateQuery({ is_active: "True" })}
-              onClickTab2={() => {
-                // Navigate to dedicated discharged list page if filtered by a facility or user has access only to one facility.
-                const id = qParams.facility || onlyAccessibleFacility?.id;
-                if (id) {
-                  navigate(`facility/${id}/discharged-patients`);
-                  return;
-                }
-
-                if (
-                  authUser.user_type === "StateAdmin" ||
-                  authUser.user_type === "StateReadOnlyAdmin"
-                ) {
-                  updateQuery({ is_active: "False" });
-                  return;
-                }
-
-                Notification.Warn({
-                  msg: "Facility needs to be selected to view discharged patients.",
-                });
-                setShowDialog("list-discharged");
-              }}
-              isTab2Active={!!tabValue}
-            />
+            {(authUser.user_type === "StateAdmin" ||
+              authUser.user_type === "StateReadOnlyAdmin") && (
+              <SwitchTabs
+                tab1="Live"
+                tab2="Discharged"
+                onClickTab1={() => updateQuery({ is_active: "True" })}
+                onClickTab2={() => updateQuery({ is_active: "False" })}
+                isTab2Active={tabValue ? true : false}
+              />
+            )}
             {showDoctorConnect && (
               <ButtonV2
                 id="doctor-connect-patient-button"

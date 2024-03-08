@@ -794,6 +794,8 @@ export const ConsultationForm = ({ facilityId, patientId, id }: Props) => {
         consent_records: state.form.consent_records || [],
       };
 
+      if (state.form.patient_no) data["patient_no"] = state.form.patient_no;
+
       const res = await dispatchAction(
         id ? updateConsultation(id!, data) : createConsultation(data)
       );

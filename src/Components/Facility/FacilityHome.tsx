@@ -440,7 +440,7 @@ export const FacilityHome = (props: any) => {
                   navigate(`/facility/${facilityId}/discharged-patients`)
                 }
               >
-                <CareIcon icon="l-user-injured" className="text-lg" />
+                <CareIcon className="care-l-user-injured text-lg" />
                 <span>View Discharged Patients</span>
               </ButtonV2>
             </div>
